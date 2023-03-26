@@ -1,0 +1,69 @@
+@import "./reset.css";
+
+$black: #242424;
+$white: rgba(255, 255, 255, 0.87);
+
+$screen-sm: "640px";
+$screen-md: "768px";
+$screen-lg: "1024px";
+$screen-xl: "1280px";
+$screen-2xl: "1536px";
+
+body {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  background-image: url("../../public/natural-paper.png");
+  background-color: $white;
+  color: $black;
+  display: flex;
+  place-items: center;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.app {
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+}
+
+
+button {
+  cursor: pointer;
+}
+
+.music-staff-container {
+  width: 100%;
+
+  .music-staff {
+    width: auto;
+  }
+}
+
+.note-playing {
+  background: $black;
+  color: $white;
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  display: flex;
+  place-content: center;
+  border-radius: 100%;
+  width: 2.5rem;
+  height: 2.5rem;
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: $screen-sm) {
+  .music-staff-container {
+  }
+}
