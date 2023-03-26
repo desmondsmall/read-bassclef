@@ -1,12 +1,12 @@
 /* eslint-disable no-useless-escape */
 import React, { useEffect, useRef } from "react";
-import { rest } from "../utils/notes";
+import { rest, naturals, sharps, flats } from "../utils/notes";
 import { EShowLabels, INote, IOptions } from "./../utils/types";
 import abcjs from "abcjs";
 
 interface Props {
-    notesToPlay: INote[];
-    userAudio: MediaStream | undefined;
+    notesToPlay: INote[] | null;
+    userAudio: MediaStream | null;
     count: number;
     options: IOptions;
 }
@@ -23,9 +23,10 @@ export const MusicStaff: React.FC<Props> = (props) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const div = useRef<any>();
     const bar = "L: 1/4 \n K: clef=bass \n";
+    const displayNotes = [ sharps[1], naturals[6], flats[2], naturals[6] ];
 
     useEffect(() => {
-        abcjs.renderAbc(div.current, bar + renderNotation(notesToPlay), {
+        abcjs.renderAbc(div.current, bar + renderNotation(notesToPlay ?? displayNotes), {
             add_classes: true,
             responsive: "resize",
             staffwidth: 200,

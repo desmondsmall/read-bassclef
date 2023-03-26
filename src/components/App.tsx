@@ -2,22 +2,20 @@ import React, { useEffect, useReducer, useState, Fragment } from "react";
 import { getRandomNotes, notesAreEqual } from "../utils/helpers";
 import { INote } from "../utils/types";
 import { optionsReducer, initialOptions } from "../reducers/options";
-import { naturals, sharps, flats } from "../utils/notes";
 import { MusicStaff } from "./MusicStaff";
 import { Analyser } from "./Analyser";
 import { TiCog, TiInfoLarge, TiArrowBackOutline } from "react-icons/ti";
 
 function App() {
 
-	const [ userAudio, setUserAudio ] = useState<MediaStream>();
+	const [ userAudio, setUserAudio ] = useState<MediaStream | null>(null);
 	const [ notePlaying, setNotePlaying ] = useState<INote | null>(null);
-	const [ notesToPlay, setNotesToPlay ] = useState<INote[]>([ sharps[1], naturals[6], flats[2], naturals[6] ]);
+	const [ notesToPlay, setNotesToPlay ] = useState<INote[] | null>(null);
 	const [ count, setCount ] = useState<number>(0);
 	const [ options, setOptions ] = useReducer(optionsReducer, initialOptions);
 
-
 	useEffect(() => {
-		if (notePlaying != null) {
+		if (notePlaying && notesToPlay) {
 			const noteToCheck = notesToPlay[count - 1];
 			if (notesAreEqual(notePlaying, noteToCheck, options)) {
 				handleCorrectNote();
@@ -39,15 +37,14 @@ function App() {
 	};
 
 	const start = () => {
-		const notes = getRandomNotes(4, options);
-		setCount(count => count + 1);
-		setNotesToPlay(notes);
+		setCount(1);
+		setNotesToPlay(getRandomNotes(4, options));
 	};
 
 	const stop = () => {
-		setUserAudio(undefined);
+		setUserAudio(null);
 		setNotePlaying(null);
-		setNotesToPlay([ sharps[1], naturals[6], flats[2], naturals[6] ]);
+		setNotesToPlay(null);
 		setCount(0);
 	};
 
@@ -55,7 +52,6 @@ function App() {
 		if (count + 1 <= 4) {
 			setCount(count => count + 1);
 		} else {
-			setCount(0);
 			start();
 		}
 	};
@@ -64,7 +60,6 @@ function App() {
 		if (count + 1 <= 4) {
 			setCount(count => count + 1);
 		} else {
-			setCount(0);
 			start();
 		}
 	};
