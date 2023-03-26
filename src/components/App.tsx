@@ -1,10 +1,10 @@
 import React, { useEffect, useReducer, useState, Fragment } from "react";
 import { getRandomNotes, notesAreEqual } from "../utils/helpers";
-import { INote } from "../utils/types";
+import { EAccidentals, INote } from "../utils/types";
 import { optionsReducer, initialOptions } from "../reducers/options";
 import { MusicStaff } from "./MusicStaff";
 import { Analyser } from "./Analyser";
-import { TiCog, TiInfoLarge, TiArrowBackOutline } from "react-icons/ti";
+import { TiCog, TiInfoLarge, TiArrowBackOutline, TiTimes, TiTimesOutline } from "react-icons/ti";
 
 function App() {
 
@@ -13,6 +13,7 @@ function App() {
 	const [ notesToPlay, setNotesToPlay ] = useState<INote[] | null>(null);
 	const [ count, setCount ] = useState<number>(0);
 	const [ options, setOptions ] = useReducer(optionsReducer, initialOptions);
+	const [ modalIsOpen, setModalIsOpen ] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (notePlaying && notesToPlay) {
@@ -65,16 +66,22 @@ function App() {
 	};
 
 	return (
-		<div className="app">
+		<main className="app">
 			<MusicStaff
 				userAudio={ userAudio }
 				notesToPlay={ notesToPlay }
 				count={ count }
 				options={ options }
 			/>
-			<TiCog onClick={ () => simulateCorrectAnswer() }/>
-			<button onClick={ async () => connectAudio() } className="primary">
+			<TiCog className="icon" onClick={ () => setModalIsOpen(state => !state) } />
+			<button onClick={ async () => connectAudio() }>
 				Play
+			</button>
+			<button onClick={ stop }>
+				Stop
+			</button>
+			<button onClick={ simulateCorrectAnswer }>
+				correct
 			</button>
 
 			{ userAudio &&
@@ -87,7 +94,38 @@ function App() {
 					<TiArrowBackOutline onClick={ stop }/>
 				</Fragment>
 			}
-		</div>
+			<section className={ `options ${ modalIsOpen ? `` : `hidden` } ` }>
+				<header>
+					<h1>Options</h1>
+					<TiTimes className="icon" onClick={ () => setModalIsOpen(state => !state) } />
+				</header>
+
+				<div className="option">
+					<h2>Accidentals</h2>
+					<p>By default only natural notes are displayed. Here you can toggle whether to include sharps or flats.</p>
+					<div className="button-group">
+						<button
+							className={ `${ options.accidentals.includes(EAccidentals.NATURALS) ? `active` : `` }` }
+							onClick={ () => null }
+							>
+								Naturals
+						</button>
+						<button
+							className={ `${ options.accidentals.includes(EAccidentals.SHARPS) ? `active` : `` }` }
+							onClick={ () => null }
+							>
+								Sharps
+						</button>
+						<button
+							className={ `${ options.accidentals.includes(EAccidentals.FLATS) ? `active` : `` }` }
+							onClick={ () => null }
+							>
+								Flats
+						</button>
+					</div>
+				</div>
+			</section>
+		</main>
 	);
 }
 

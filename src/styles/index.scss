@@ -1,7 +1,7 @@
 @import "./reset.css";
 
 $black: #242424;
-$white: rgba(255, 255, 255, 0.87);
+$white: #fefefe;
 
 $screen-sm: "640px";
 $screen-md: "768px";
@@ -9,14 +9,21 @@ $screen-lg: "1024px";
 $screen-xl: "1280px";
 $screen-2xl: "1536px";
 
+$font-mono: 'Roboto', sans-serif;
+$font-sans: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
 body {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: $font-sans;
   font-size: 16px;
   background-image: url("../../public/natural-paper.png");
   background-color: $white;
   color: $black;
   display: flex;
   place-items: center;
+}
+
+h1 {
+  font-size: 2.75rem;
 }
 
 #root {
@@ -61,6 +68,63 @@ button {
     display: flex;
     align-items: center;
   }
+}
+
+.options {
+  background-color: #eee;
+  position: absolute;
+  inset: 0;
+  padding: 1rem;
+
+  header {
+    display: flex;
+    align-items: center;
+  
+    h1 {
+      flex-grow: 1;
+      font-weight: 900;
+      margin-bottom: 1.75rem;
+    }
+  }
+
+  .option {
+    background-color: $white;
+    padding: 1rem;
+    border-radius: 5px;
+  
+    h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    .button-group {
+      display: flex;
+
+      button {
+        text-transform: uppercase;
+        font-family: $font-mono;
+        letter-spacing: 0.15rem;
+        padding: 0.5rem 1.5rem;
+        border-radius: 2px;
+        border: 2px solid $black;
+      }
+    }
+  }
+
+
+}
+
+.icon {
+  font-size: 3.5rem;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+  transition-duration: 5;
 }
 
 @media screen and (max-width: $screen-sm) {

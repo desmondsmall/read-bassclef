@@ -27,22 +27,23 @@ export const getRandomNotes = (n: number, options: IOptions): INote[] => {
     let notePool: INote[] = [];
     const randomNotes: INote[] = [];
 
-    for (let i = 0; i < n; i++) {
-        switch (options.accidentals) {
-            case EAccidentals.BOTH:
-                notePool = naturals.concat(sharps).concat(flats);
-                break;
+    options.accidentals?.forEach(accidental => {
+        switch (accidental) {
             case EAccidentals.SHARPS:
-                notePool = naturals.concat(sharps);
+                notePool = notePool.concat(sharps);
                 break;
             case EAccidentals.FLATS:
-                notePool = naturals.concat(flats);
+                notePool = notePool.concat(flats);
                 break;
-            case EAccidentals.NONE:
-                notePool = naturals;
+            case EAccidentals.NATURALS:
+                notePool = notePool.concat(naturals);
                 break;
         }
+    });
 
+    if (notePool.length === 0) notePool.concat(naturals);
+
+    for (let i = 0; i < n; i++) {
         const randomInt = randomIntFromInterval(0, notePool.length - 1);
         randomNotes.push(notePool[randomInt]);
     }

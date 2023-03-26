@@ -1,7 +1,7 @@
 import { EAccidentals, EShowLabels, IOptions } from "../utils/types";
 
 export const initialOptions: IOptions = {
-  accidentals: EAccidentals.SHARPS,
+  accidentals: [ EAccidentals.NATURALS ],
   showLabels: EShowLabels.WHENCORRECT,
   ignoreOctaves: true,
 };
