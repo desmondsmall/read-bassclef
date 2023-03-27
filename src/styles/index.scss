@@ -23,7 +23,11 @@ body {
 }
 
 h1 {
-  font-size: 2.75rem;
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 1.75rem;
 }
 
 #root {
@@ -71,25 +75,29 @@ button {
 }
 
 .options {
-  background-color: #eee;
+  background-color: $white;
   position: absolute;
   inset: 0;
-  padding: 1rem;
+  padding: 1.25rem;
 
   header {
     display: flex;
     align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid $black;
   
     h1 {
       flex-grow: 1;
       font-weight: 900;
-      margin-bottom: 1.75rem;
+    }
+
+    svg {
+      margin-right: -0.5rem;
     }
   }
 
   .option {
-    background-color: $white;
-    padding: 1rem;
     border-radius: 5px;
   
     h2 {
@@ -102,14 +110,23 @@ button {
 
     .button-group {
       display: flex;
+      gap: 0.5rem;
 
       button {
+        width: 100%;
         text-transform: uppercase;
         font-family: $font-mono;
         letter-spacing: 0.15rem;
-        padding: 0.5rem 1.5rem;
+        padding: 0.5rem 1rem;
         border-radius: 2px;
         border: 2px solid $black;
+        font-size: 13px;
+        transition-duration: 300ms;
+      }
+
+      button.active {
+        background-color: $black;
+        color: $white;
       }
     }
   }

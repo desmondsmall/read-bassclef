@@ -12,7 +12,7 @@ function App() {
 	const [ notePlaying, setNotePlaying ] = useState<INote | null>(null);
 	const [ notesToPlay, setNotesToPlay ] = useState<INote[] | null>(null);
 	const [ count, setCount ] = useState<number>(0);
-	const [ options, setOptions ] = useReducer(optionsReducer, initialOptions);
+	const [ options, dispatchOptions ] = useReducer(optionsReducer, initialOptions);
 	const [ modalIsOpen, setModalIsOpen ] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -102,23 +102,23 @@ function App() {
 
 				<div className="option">
 					<h2>Accidentals</h2>
-					<p>By default only natural notes are displayed. Here you can toggle whether to include sharps or flats.</p>
+					<p>Only naturals are displayed by default. Add sharps or flats for more of a challenge.</p>
 					<div className="button-group">
 						<button
 							className={ `${ options.accidentals.includes(EAccidentals.NATURALS) ? `active` : `` }` }
-							onClick={ () => null }
+							onClick={ () => dispatchOptions({ type: "toggleAccidental", value: EAccidentals.NATURALS }) }
 							>
 								Naturals
 						</button>
 						<button
 							className={ `${ options.accidentals.includes(EAccidentals.SHARPS) ? `active` : `` }` }
-							onClick={ () => null }
+							onClick={ () => dispatchOptions({ type: "toggleAccidental", value: EAccidentals.SHARPS }) }
 							>
 								Sharps
 						</button>
 						<button
 							className={ `${ options.accidentals.includes(EAccidentals.FLATS) ? `active` : `` }` }
-							onClick={ () => null }
+							onClick={ () => dispatchOptions({ type: "toggleAccidental", value: EAccidentals.FLATS }) }
 							>
 								Flats
 						</button>

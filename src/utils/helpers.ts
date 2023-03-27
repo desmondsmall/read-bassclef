@@ -41,7 +41,7 @@ export const getRandomNotes = (n: number, options: IOptions): INote[] => {
         }
     });
 
-    if (notePool.length === 0) notePool.concat(naturals);
+    if (notePool?.length === 0) notePool = naturals;
 
     for (let i = 0; i < n; i++) {
         const randomInt = randomIntFromInterval(0, notePool.length - 1);
