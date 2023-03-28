@@ -9,7 +9,7 @@ $screen-lg: "1024px";
 $screen-xl: "1280px";
 $screen-2xl: "1536px";
 
-$font-mono: 'Roboto', sans-serif;
+$font-mono: 'Roboto Mono', sans-serif;
 $font-sans: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
 body {
@@ -99,9 +99,11 @@ button {
 
   .option {
     border-radius: 5px;
+    margin-bottom: 2rem;
   
     h2 {
       margin-bottom: 0.5rem;
+      font-weight: 600;
     }
 
     p {
@@ -111,27 +113,27 @@ button {
     .button-group {
       display: flex;
       gap: 0.5rem;
-
-      button {
-        width: 100%;
-        text-transform: uppercase;
-        font-family: $font-mono;
-        letter-spacing: 0.15rem;
-        padding: 0.5rem 1rem;
-        border-radius: 2px;
-        border: 2px solid $black;
-        font-size: 13px;
-        transition-duration: 300ms;
-      }
-
-      button.active {
-        background-color: $black;
-        color: $white;
-      }
+      font-size: 14px;
     }
   }
 
 
+}
+
+button {
+  text-transform: uppercase;
+  font-family: $font-mono;
+  letter-spacing: 0.15rem;
+  padding: 0.5rem 1rem;
+  border-radius: 2px;
+  border: 2px solid $black;
+  transition-duration: 300ms;
+}
+
+button.primary,
+button.active {
+  background-color: $black;
+  color: $white;
 }
 
 .icon {

@@ -7,13 +7,13 @@ export interface INote {
 export interface IOptions {
     accidentals: EAccidentals[];
     showLabels: EShowLabels;
-    ignoreOctaves: boolean;
+    detectOctaves: boolean;
 }
 
-export enum EActionTypes {
-     ACCIDENTALS = "Accidentals",
-     LABELS = "Labels",
-}
+export type Action =
+     | { type: "toggleAccidental", accidental: EAccidentals }
+     | { type: "showLabels", label: EShowLabels }
+     | { type: "detectOctaves", octave: boolean }
 
 export enum EAccidentals {
      SHARPS = "Sharps",
@@ -25,5 +25,4 @@ export enum EShowLabels {
      ALWAYS = "Always",
      NEVER = "Never",
      WHENCORRECT = "WhenCorrect",
-     NONE = "None",
 }
