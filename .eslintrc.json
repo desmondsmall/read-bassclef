@@ -23,6 +23,7 @@
         "semi": ["error", "always"],
         "array-bracket-spacing": ["error", "always"],
         "object-curly-spacing": ["error", "always"],
+        "react/no-unescaped-entities": ["off"],
         "no-trailing-spaces": ["error", {
             "skipBlankLines": false,
             "ignoreComments": true

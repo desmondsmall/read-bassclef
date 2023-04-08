@@ -41,10 +41,10 @@ export const MusicStaff: React.FC<Props> = (props) => {
             if (index < count && userAudio ) {
                 switch (options.showLabels) {
                     case EShowLabels.ALWAYS:
-                        notation += `\"_${note.note}${note.octave}\"${note.notation}`;
+                        notation += `\"_${ note.note }${ options.detectOctaves ? note.octave : "" }\"${ note.notation }`;
                         break;
                     case EShowLabels.WHENCORRECT:
-                        notation += index + 1 != count ? `\"_${note.note}${note.octave}\"${note.notation}` : `\"_?\"${note.notation}`;
+                        notation += index + 1 != count ? `\"_${ note.note }${ options.detectOctaves ? note.octave : "" }\"${ note.notation }` : `\"_?\"${ note.notation }`;
                         break;
                     case EShowLabels.NEVER:
                         notation += note.notation;

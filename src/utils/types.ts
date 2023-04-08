@@ -10,6 +10,12 @@ export interface IOptions {
     detectOctaves: boolean;
 }
 
+export enum EModal {
+     OPTIONS = "options",
+     INFO = "info",
+     HIDDEN = "",
+}
+
 export type Action =
      | { type: "toggleAccidental", accidental: EAccidentals }
      | { type: "showLabels", label: EShowLabels }

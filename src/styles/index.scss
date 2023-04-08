@@ -1,152 +1,368 @@
 @import "./reset.css";
 
 $black: #242424;
-$white: #fefefe;
+$brand: $black;
+$white: rgb(245 245 244);
+$bg: radial-gradient(circle, rgb(255, 255, 255) 0%, rgb(234, 240, 255) 50%, rgb(255, 255, 255) 100%);
 
+$screen-xs: "475px";
 $screen-sm: "640px";
 $screen-md: "768px";
-$screen-lg: "1024px";
+$screen-lg: "980px";
 $screen-xl: "1280px";
 $screen-2xl: "1536px";
 
-$font-mono: 'Roboto Mono', sans-serif;
+$shadow-sm: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+$font-mono: 'Inconsolata', sans-serif;
 $font-sans: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
-body {
-  font-family: $font-sans;
-  font-size: 16px;
-  background-image: url("../../public/natural-paper.png");
-  background-color: $white;
-  color: $black;
-  display: flex;
-  place-items: center;
-}
-
-h1 {
-  font-size: 2.5rem;
-}
-
-h2 {
-  font-size: 1.75rem;
-}
-
 #root {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	font-family: $font-sans;
+	font-size: 16px;
+	color: $brand;
+	overflow: hidden;
+	background: $bg;
 }
 
 .app {
-  min-height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  place-content: center;
+	min-height: 100vh;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
+header {
+	text-align: center;
+	text-transform: uppercase;
 
-button {
-  cursor: pointer;
+	h1 {
+		font-size: 2.5rem;
+		letter-spacing: 0.075rem;
+	}
+
+	h2 {
+		font-weight: normal;
+		margin-bottom: -0.25rem;
+		font-size: 1.5rem;
+		display: block;
+	}
+}
+
+.intro {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	p.description {
+		max-width: 650px;
+		font-family: $font-mono;
+		margin: 0 0 2rem;
+		padding: 0 8%;
+		text-align: center;
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+	}
+
+	.play {
+		margin: 0 auto;
+		width: 125px;
+		padding: 0.45rem 2.5rem;
+		font-family: $font-sans;
+		font-size: 1rem;
+		background-color: $brand;
+		color: $white;
+		box-shadow: $shadow-sm;
+		transition-duration: 200ms;
+	}
+
+	.play:hover,
+	button.active:hover {
+		background-color: $black;
+		color: $white;
+	}
 }
 
 .music-staff-container {
-  width: 100%;
+	width: 100%;
+	max-width: 600px;
+	color: $black;
 
-  .music-staff {
-    width: auto;
-  }
+	.music-staff {
+		width: auto;
+		color: $black;
+
+		.abcjs-note_selected {
+			fill: $black;
+		}
+		.abcjs-annotation {
+			position: relative;
+			left: -2rem;
+		}
+	}
 }
 
 .note-playing {
-  background: $black;
-  color: $white;
-  position: absolute;
-  left: 1rem;
-  top: 1rem;
-  display: flex;
-  place-content: center;
-  border-radius: 100%;
-  width: 2.5rem;
-  height: 2.5rem;
+	background: $black;
+	color: $white;
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+	display: flex;
+	place-content: center;
+	border-radius: 100%;
+	width: 3rem;
+	height: 3rem;
+	box-shadow: $shadow-sm;
 
-  span {
-    display: flex;
-    align-items: center;
-  }
+	span {
+		display: flex;
+		align-items: center;
+	}
 }
 
 .options {
-  background-color: $white;
-  position: absolute;
-  inset: 0;
-  padding: 1.25rem;
+	background: $bg;
+	position: absolute;
+	inset: 0;
+	transition-duration: 200ms;
+	padding: 1.25rem;
+	z-index: 10;
+	display: flex;
+	flex-direction: column;
+	place-content: center;
 
-  header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid $black;
-  
-    h1 {
-      flex-grow: 1;
-      font-weight: 900;
-    }
+	&--wrapper {
+		max-width: 600px;
+	}
 
-    svg {
-      margin-right: -0.5rem;
-    }
-  }
+	.header {
+		display: flex;
+		align-items: center;
+		margin-bottom: 1.5rem;
+		padding-bottom: 0.75rem;
+		border-radius: 0 0.5rem;
+		border-bottom: 5px solid $brand;
 
-  .option {
-    border-radius: 5px;
-    margin-bottom: 2rem;
-  
-    h2 {
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
+		h1 {
+			flex-grow: 1;
+			font-weight: 900;
+			font-size: 2.5rem;
+		}
 
-    p {
-      margin-bottom: 1rem;
-    }
+		svg {
+			position: relative;
+			top: 0.1rem;
+			font-size: 3rem;
+		}
+	}
 
-    .button-group {
-      display: flex;
-      gap: 0.5rem;
-      font-size: 14px;
-    }
-  }
+	.option {
+		border-radius: 5px;
+		margin-bottom: 2rem;
 
+		h2 {
+			margin-bottom: 0.25rem;
+			font-weight: 600;
+		}
 
+		p {
+			margin-bottom: 1rem;
+		}
+
+		.button-group {
+			display: flex;
+			gap: 0.5rem;
+			font-size: 14px;
+			font-size: 0.75rem;
+		}
+	}
 }
 
 button {
-  text-transform: uppercase;
-  font-family: $font-mono;
-  letter-spacing: 0.15rem;
-  padding: 0.5rem 1rem;
-  border-radius: 2px;
-  border: 2px solid $black;
-  transition-duration: 300ms;
+	z-index: 1;
+	text-transform: uppercase;
+	font-family: $font-sans;
+	font-weight: 600;
+	letter-spacing: 0.125rem;
+	padding: 0.4rem 1rem;
+	border-radius: 2px;
+	cursor: pointer;
+	border-radius: 0.125rem;
+	border: 2px solid $black;
+	display: flex;
+	justify-content: center;
 }
 
 button.primary,
 button.active {
-  background-color: $black;
-  color: $white;
+	background-color: $brand;
+	color: $white;
 }
 
 .icon {
-  font-size: 3.5rem;
-  cursor: pointer;
+	font-size: 2.75rem;
+	cursor: pointer;
+}
+
+.link-group {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	position: absolute;
+	bottom: 0.5rem;
+	right: 0.5rem;
 }
 
 .hidden {
-  display: none;
-  transition-duration: 5;
+	opacity: 0;
+	pointer-events: none;
 }
 
-@media screen and (max-width: $screen-sm) {
-  .music-staff-container {
-  }
+@media screen and (min-width: $screen-xs) {
+	.app {
+		padding: 0 5%;
+		margin-top: -1rem;
+	}
+
+	.intro p.description {
+		padding: 0 12%;
+	}
+
+	header h1 {
+		font-size: 2.75rem;
+	}
+
+	.options {
+		&--wrapper {
+			margin: 0 auto;
+			width: 90%;
+		}
+	}
+}
+
+@media screen and (min-width: $screen-sm) {
+	.app {
+		padding: 0 5%;
+	}
+
+	.intro p.description {
+		padding: 0 8% 1rem;
+		font-size: 1.5rem;
+	}
+
+	.intro button.play {
+		width: 150px;
+		font-size: 1.25rem;
+	}
+
+	header h1 {
+		font-size: 3rem;
+	}
+
+	.options {
+		&--wrapper {
+			margin: 0 auto;
+			width: 75%;
+		}
+
+		p {
+			font-size: 1.15rem;
+		}
+
+		button {
+			font-size: 0.8rem;
+		}
+	}
+}
+
+@media screen and (min-width: $screen-md) {
+	.intro p.description {
+		line-height: 2rem;
+		font-size: 1.75rem;
+	}
+
+	header h2 {
+		font-size: 1.75rem;
+	}
+
+	header h1 {
+		font-size: 3.5rem;
+	}
+
+	.link-group {
+		padding: 1rem;
+		.icon {
+			font-size: 3.5rem;
+			margin-left: 1rem;
+		}
+	}
+
+	.note-playing {
+		top: 1.25rem;
+		left: 1.25rem;
+		width: 4rem;
+		height: 4rem;
+		background: #242424e0;
+
+		span {
+			font-size: 1.25rem;
+		}
+	}
+}
+
+@media screen and (min-width: $screen-lg) {
+	.intro p.description {
+		padding: 0 0 1rem;
+		line-height: 2.35rem;
+	}
+
+	.options {
+		&--wrapper {
+			margin: 0 auto;
+			width: 50%;
+		}
+
+		.header {
+			svg {
+				font-size: 3.5rem;
+			}
+		}
+	}
+
+	.intro button.play {
+		width: 175px;
+		font-size: 1.55rem;
+	}
+
+	.music-staff-container {
+		margin: -1rem;
+		max-width: 700px;
+	}
+}
+
+@media screen and (min-width: $screen-xl) {
+	.intro p.description {
+		padding: 0 0 1rem;
+	}
+
+	header h2 {
+		letter-spacing: 0.15rem;
+	}
+
+	header h1 {
+		font-size: 4rem;
+	}
+
+	.intro button.play {
+		width: 175px;
+		font-size: 1.55rem;
+	}
 }

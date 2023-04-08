@@ -1,11 +1,11 @@
-import React, { useEffect, useReducer, useState, Fragment } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { getRandomNotes, notesAreEqual } from "../utils/helpers";
-import { INote } from "../utils/types";
+import { EModal, INote } from "../utils/types";
 import { optionsReducer, initialOptions } from "../reducers/options";
 import { MusicStaff } from "./MusicStaff";
 import { Analyser } from "./Analyser";
 import { Options } from "./Options";
-import { TiCog, TiInfoLarge, TiArrowBackOutline, TiTimes, TiTimesOutline } from "react-icons/ti";
+import { TiCog, TiInfoLarge } from "react-icons/ti";
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
 	const [ notePlaying, setNotePlaying ] = useState<INote | null>(null);
 	const [ notesToPlay, setNotesToPlay ] = useState<INote[] | null>(null);
 	const [ options, dispatchOptions ] = useReducer(optionsReducer, initialOptions);
-	const [ modalIsOpen, setModalIsOpen ] = useState<boolean>(false);
+	const [ modal, setModal ] = useState<EModal>(EModal.HIDDEN);
 	const [ count, setCount ] = useState<number>(0);
 
 	useEffect(() => {
@@ -26,17 +26,24 @@ function App() {
 		}
 	}, [ notePlaying ]);
 
+	useEffect(() => console.log(options), [ options ]);
 	const connectAudio = async () => {
-		const microphone = await navigator.mediaDevices.getUserMedia({
-			audio: {
-				echoCancellation: false,
-				autoGainControl: false,
-				noiseSuppression: false,
-				latency: 0
-			}
-		});
-		setUserAudio(microphone);
-		start();
+		try {
+			const microphone = await navigator.mediaDevices.getUserMedia({
+				audio: {
+					echoCancellation: false,
+					autoGainControl: false,
+					noiseSuppression: false,
+					latency: 0,
+				},
+				video: false,
+			});
+			setUserAudio(microphone);
+			start();
+		} catch(err) {
+			// handle error
+			console.log(err);
+		}
 	};
 
 	const start = () => {
@@ -68,27 +75,40 @@ function App() {
 					setNotePlaying={ setNotePlaying }
 				/>
 			}
+
+			{ !userAudio &&
+				<header>
+					<h2>Learn to Read</h2>
+					<h1>Bass Clef</h1>
+				</header>
+			}
 			<MusicStaff
 				userAudio={ userAudio }
 				notesToPlay={ notesToPlay }
 				count={ count }
 				options={ options }
 			/>
-			<button onClick={ async () => connectAudio() }>
-				Play
-			</button>
-			<button onClick={ stop } className={ ` ${ userAudio ? "" : "hidden" }` }>
-				Stop
-			</button>
+			{ !userAudio ?
+				<div className="intro">
+					<p className="description">Plug your bass into an audio interace or put your mic/phone by your amp and crank it!</p>
+					<button onClick={ async () => connectAudio() } className="play">
+						Play
+					</button>
+				</div>
+			:
+				<button onClick={ stop }>
+					Stop
+				</button>
+			}
 			<Options
 				dispatchOptions={ dispatchOptions }
 				options={ options }
-				modalIsOpen={ modalIsOpen }
-				setModalIsOpen={ setModalIsOpen }
+				modal={ modal }
+				setModal={ setModal }
 			/>
-			<div style={ { display: "flex", alignItems: "center" } }>
-				<h3>Options</h3>
-				<TiCog className="icon" onClick={ () => setModalIsOpen(state => !state) } />
+			<div className="link-group">
+				<TiInfoLarge className="icon" onClick={ () => setModal(EModal.INFO) }/>
+				<TiCog className="icon" onClick={ () => setModal(EModal.OPTIONS) }/>
 			</div>
 		</main>
 	);

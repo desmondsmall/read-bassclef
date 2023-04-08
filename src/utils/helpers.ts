@@ -5,6 +5,22 @@ export const randomIntFromInterval = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
+export const transpose = (note: string) => {
+    const range = [ "F", "G", "A", "B", "C", "D", "E", "F", "G" ];
+    const letter = note.slice(0, 1);
+    const index = range.indexOf(letter);
+
+    if (note.includes("♭")) {
+        return note.replace(letter + "♭", range[index - 1] + "♯");
+    }
+
+    if (note.includes("♯")) {
+        return note.replace(letter + "♯", range[index + 1] + "♭");
+    }
+
+    return note;
+};
+
 export const frequencyToNote = (freq: number | null): INote | null => {
     if (freq === null || freq < 30 || freq > 530) {
         return null;
@@ -51,10 +67,13 @@ export const getRandomNotes = (n: number, options: IOptions): INote[] => {
     return randomNotes;
 };
 
-export const notesAreEqual = (note1: INote, note2: INote, options: IOptions): boolean => {
-    if (options.ignoreOctaves) {
-        return note1.note === note2.note;
+export const notesAreEqual = (notePlaying: INote, noteToCheck: INote, options: IOptions): boolean => {
+    const equalNote: boolean = notePlaying.note === noteToCheck.note || transpose(notePlaying.note) === noteToCheck.note;
+    const equalOctave: boolean = notePlaying.octave === noteToCheck.octave;
+
+    if (options.detectOctaves) {
+        return equalNote && equalOctave;
     } else {
-        return note1.note === note2.note && note1.octave === note2.octave;
+        return equalNote;
     }
 };
