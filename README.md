@@ -2,4 +2,4 @@
 
 This is a music trainer written in React for bass guitar. It uses the Web Audio API to connect to a recording device and listens for correct notes.
 
-View @ [bassfretboard.com](https://bassfretboard.com)
+View @ [learnbassclef.com](https://learnbassclef.com)
