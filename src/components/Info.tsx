@@ -30,7 +30,6 @@ export const Info: React.FC<Props> = (props) => {
                         <p>
                             I made a similar tool <a href="https://bassfretboard.com/" target="_blank" rel="noreferrer">here</a>.
                             You can check out the code on <a href="https://github.com/desmondsmall/read-bassclef" target="_blank" rel="noreferrer">github</a>.
-                            Feel free to email me at desmond at fastmail dot com with any questions or comments
                         </p>
                         <p>
                             Thanks for visiting! 🙂
