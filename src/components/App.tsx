@@ -1,26 +1,31 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { optionsReducer, initialOptions } from "../reducers/optionsReducer";
 import { getRandomNotes, notesAreEqual } from "../utils/helpers";
+import { TiCog, TiInfoLarge } from "react-icons/ti";
 import { EModal, INote } from "../utils/types";
 import { MusicStaff } from "./MusicStaff";
 import { Analyser } from "./Analyser";
 import { Options } from "./Options";
+import { Info } from "./Info";
 
 export const App: React.FC = () => {
 
+	const [ options, dispatchOptions ] = useReducer(optionsReducer, initialOptions);
+	const [ notesToPlay, setNotesToPlay ] = useState<INote[] | null>(null);
 	const [ userAudio, setUserAudio ] = useState<MediaStream | null>(null);
 	const [ notePlaying, setNotePlaying ] = useState<INote | null>(null);
-	const [ notesToPlay, setNotesToPlay ] = useState<INote[] | null>(null);
-	const [ options, dispatchOptions ] = useReducer(optionsReducer, initialOptions);
 	const [ modal, setModal ] = useState<EModal>(EModal.HIDDEN);
-	const [ count, setCount ] = useState<number>(0);
 	const [ error, setError ] = useState<boolean>(false);
+	const [ count, setCount ] = useState<number>(0);
 
+	// listen for correct notes
 	useEffect(() => {
 		if (notePlaying && notesToPlay) {
 			const noteToCheck = notesToPlay[count - 1];
 			if (notesAreEqual(notePlaying, noteToCheck, options)) {
-				handleCount();
+				count + 1 <= 4
+					? setCount(count => count + 1)
+					: reset();
 			}
 		}
 	}, [ notePlaying ]);
@@ -36,16 +41,11 @@ export const App: React.FC = () => {
 				video: false,
 			});
 			setUserAudio(microphone);
-			start();
 			setError(false);
-		} catch(err) {
+			reset();
+		} catch (err) {
 			setError(true);
 		}
-	};
-
-	const start = () => {
-		setCount(1);
-		setNotesToPlay(getRandomNotes(4, options));
 	};
 
 	const stop = () => {
@@ -55,24 +55,20 @@ export const App: React.FC = () => {
 		setCount(0);
 	};
 
-	const handleCount = () => {
-		if (count + 1 <= 4) {
-			setCount(count => count + 1);
-		} else {
-			start();
-		}
+	const reset = () => {
+		setCount(1);
+		setNotesToPlay(getRandomNotes(4, options));
 	};
 
 	return (
 		<main className="app">
-			{ userAudio &&
+			{userAudio ?
 				<Analyser
 					userAudio={ userAudio }
 					notePlaying={ notePlaying }
 					setNotePlaying={ setNotePlaying }
 				/>
-			}
-			{ !userAudio &&
+				:
 				<header>
 					<h2>Learn to Read</h2>
 					<h1>Bass Clef</h1>
@@ -84,34 +80,46 @@ export const App: React.FC = () => {
 				count={ count }
 				options={ options }
 			/>
-			{ !userAudio ?
+			{!userAudio ?
 				<div className="intro">
-					<p className="description">Plug your bass into an audio interace or put your mic/phone by your amp and crank it!</p>
-					<button onClick={ async () => connectAudio() } className="play">
-						Play
-					</button>
+					<p className="description">Plug your bass into an audio interace or put your mic or phone next to your amp and crank it!</p>
+					<button onClick={ async () => connectAudio() } className="play">Play</button>
 				</div>
-			:
-				<button className="stop" onClick={ stop }>
+				:
+				<button className="play" onClick={ stop }>
 					Stop
 				</button>
 			}
-			{ error &&
+			{error &&
 				<div className="error-message">
 					<p>
-						There was an error connecting your audio.<br/>
-						You might have to close and re-open your browser. <br/>
+						There was an error connecting your audio.<br />
+						You might have to close and re-open your browser. <br />
 						Make sure to hit accept!
 					</p>
 					<button onClick={ () => setError(false) }>x</button>
 				</div>
 			}
+			<Info
+				modal={ modal }
+				setModal={ setModal }
+			/>
 			<Options
 				dispatchOptions={ dispatchOptions }
 				options={ options }
 				modal={ modal }
 				setModal={ setModal }
 			/>
+			<div className="link-group">
+				<TiInfoLarge
+					className="icon"
+					onClick={ () => setModal(EModal.INFO) }
+				/>
+				<TiCog
+					className="icon"
+					onClick={ () => setModal(EModal.OPTIONS) }
+				/>
+			</div>
 		</main>
 	);
 };

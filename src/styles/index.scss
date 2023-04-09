@@ -4,6 +4,7 @@ $black: #242424;
 $brand: $black;
 $white: rgb(245 245 244);
 $blue: #9ba7c5;
+$darkBlue: #4d6dbd;
 $bg: radial-gradient(circle, rgb(255, 255, 255) 0%, rgb(224, 233, 255) 50%, rgb(255, 255, 255) 100%);
 
 $screen-xs: "475px";
@@ -22,11 +23,32 @@ $font-sans: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	height: 100%;
 }
 
+#bmc-wbtn {
+	background-color: transparent !important;
+	box-shadow: none !important;
+
+	img {
+		margin-top: 2.5rem !important;
+		margin-right: 3rem !important;
+		width: 27px !important;
+		height: 27px !important;
+	}
+}
+
+
+@media screen and (min-width: $screen-md) {
+	#bmc-wbtn img {
+		width: 40px !important;
+		height: 40px !important;
+		margin: 0.5rem !important;
+	}
+}
+
 body {
 	font-family: $font-sans;
 	font-size: 16px;
 	color: $brand;
-	overflow: hidden;
+	overflow-x: hidden;
 	background: $bg;
 }
 
@@ -69,29 +91,24 @@ header {
 		font-size: 1.25rem;
 		line-height: 1.75rem;
 	}
-
-	.play {
-		margin: 0 auto;
-		width: 125px;
-		padding: 0.35rem 2rem;
-		font-family: $font-sans;
-		font-size: 1rem;
-		background-color: $brand;
-		color: $white;
-		box-shadow: $shadow-sm;
-		transition-duration: 300ms;
-	}
-
-	.play:hover,
-	button.active:hover {
-		background-color: #444444;
-		color: $white;
-	}
 }
 
-.stop {
-	position: absolute;
-	bottom: 3rem;
+.play {
+	margin: 0 auto;
+	width: 125px;
+	padding: 0.35rem 2rem;
+	font-family: $font-sans;
+	font-size: 1rem;
+	background-color: $brand;
+	color: $white;
+	box-shadow: $shadow-sm;
+	transition-duration: 300ms;
+}
+
+.play:hover,
+button.active:hover {
+	background-color: #444444;
+	color: $white;
 }
 
 .music-staff-container {
@@ -132,7 +149,7 @@ header {
 	}
 }
 
-.options {
+.modal {
 	background: $bg;
 	position: absolute;
 	inset: 0;
@@ -145,6 +162,7 @@ header {
 
 	&--wrapper {
 		max-width: 600px;
+		margin: 0 auto;
 	}
 
 	.header {
@@ -167,27 +185,39 @@ header {
 			font-size: 3rem;
 		}
 	}
+}
 
-	.option {
-		border-radius: 5px;
-		margin-bottom: 2rem;
+.option {
+	border-radius: 5px;
+	margin-bottom: 2rem;
 
-		h2 {
-			margin-bottom: 0.25rem;
-			font-weight: 600;
-		}
-
-		p {
-			margin-bottom: 1rem;
-		}
-
-		.button-group {
-			display: flex;
-			gap: 0.5rem;
-			font-size: 14px;
-			font-size: 0.75rem;
-		}
+	h2 {
+		margin-bottom: 0.25rem;
+		font-weight: 600;
 	}
+
+	p {
+		margin-bottom: 1rem;
+	}
+
+	.button-group {
+		display: flex;
+		gap: 0.5rem;
+		font-size: 14px;
+		font-size: 0.75rem;
+	}
+}
+
+.info {
+	p {
+		margin-bottom: 1rem;
+	}
+}
+
+a {
+	color: $darkBlue;
+	font-weight: bold;
+	text-decoration: underline;
 }
 
 button {
@@ -255,7 +285,6 @@ button.active {
 @media screen and (min-width: $screen-xs) {
 	.app {
 		padding: 0 5%;
-		margin-top: -1rem;
 	}
 
 	.intro p.description {
@@ -293,7 +322,7 @@ button.active {
 		font-size: 3rem;
 	}
 
-	.options {
+	.modal {
 		&--wrapper {
 			margin: 0 auto;
 			width: 75%;
@@ -309,10 +338,23 @@ button.active {
 	}
 }
 
+@media screen and (max-width: $screen-md) {
+	.modal {
+		inset: unset;
+		top: 0;
+		min-height: 100%;
+	}
+}
+
 @media screen and (min-width: $screen-md) {
 	.intro p.description {
 		line-height: 2rem;
 		font-size: 1.5rem;
+	}
+	
+	.info p {
+		font-size: 1.25rem;
+		margin-bottom: 1.75rem;
 	}
 
 	header h2 {
@@ -350,7 +392,7 @@ button.active {
 		line-height: 2.35rem;
 	}
 
-	.options {
+	.modal {
 		&--wrapper {
 			margin: 0 auto;
 			width: 50%;
