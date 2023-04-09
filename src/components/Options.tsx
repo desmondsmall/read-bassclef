@@ -27,7 +27,6 @@ export const Options: React.FC<Props> = (props) => {
 							<TiTimes className="icon" onClick={ () => setModal(EModal.HIDDEN) } />
 						</div>
 
-
 						<div className="option">
 							<div className="label">
 								<h2>Show Labels</h2>
@@ -37,20 +36,20 @@ export const Options: React.FC<Props> = (props) => {
 								<button
 									className={ `${ options.showLabels === EShowLabels.WHENCORRECT ? `active` : `` }` }
 									onClick={ () => dispatchOptions({ type: "showLabels", label: EShowLabels.WHENCORRECT }) }
-									>
-										Correct
+								>
+									Correct
 								</button>
 								<button
 									className={ `${ options.showLabels === EShowLabels.ALWAYS ? `active` : `` }` }
 									onClick={ () => dispatchOptions({ type: "showLabels", label: EShowLabels.ALWAYS }) }
-									>
-										On
+								>
+									On
 								</button>
 								<button
 									className={ `${ options.showLabels === EShowLabels.NEVER ? `active` : `` }` }
 									onClick={ () => dispatchOptions({ type: "showLabels", label: EShowLabels.NEVER }) }
-									>
-										Off
+								>
+									Off
 								</button>
 							</div>
 						</div>
@@ -63,20 +62,20 @@ export const Options: React.FC<Props> = (props) => {
 								<button
 									className={ `${ options.accidentals.includes(EAccidentals.NATURALS) ? `active` : `` }` }
 									onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.NATURALS }) }
-									>
-										Naturals
+								>
+									Naturals
 								</button>
 								<button
 									className={ `${ options.accidentals.includes(EAccidentals.SHARPS) ? `active` : `` }` }
 									onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.SHARPS }) }
-									>
-										Sharps
+								>
+									Sharps
 								</button>
 								<button
 									className={ `${ options.accidentals.includes(EAccidentals.FLATS) ? `active` : `` }` }
 									onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.FLATS }) }
-									>
-										Flats
+								>
+									Flats
 								</button>
 							</div>
 						</div>
@@ -90,14 +89,14 @@ export const Options: React.FC<Props> = (props) => {
 								<button
 									className={ `${ !options.detectOctaves ? `active` : `` }` }
 									onClick={ () => dispatchOptions({ type: "detectOctaves", octave: false }) }
-									>
-										Off
+								>
+									Off
 								</button>
 								<button
 									className={ `${ options.detectOctaves ? `active` : `` }` }
 									onClick={ () => dispatchOptions({ type: "detectOctaves", octave: true }) }
-									>
-										On
+								>
+									On
 								</button>
 							</div>
 						</div>

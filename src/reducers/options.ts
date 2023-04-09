@@ -1,4 +1,4 @@
-import { EAccidentals, EShowLabels, IOptions, IAction } from "../utils/types";
+import { EAccidentals, EShowLabels, IOptions, Action } from "../utils/types";
 
 export const initialOptions: IOptions = {
   accidentals: [ EAccidentals.NATURALS ],
@@ -6,7 +6,7 @@ export const initialOptions: IOptions = {
   detectOctaves: false,
 };
 
-export const optionsReducer = (state: IOptions, action: IAction) => {
+export const optionsReducer = (state: IOptions, action: Action) => {
   switch (action.type) {
     case "toggleAccidental": {
       const accidentals = [ ...state.accidentals ];
@@ -29,7 +29,5 @@ export const optionsReducer = (state: IOptions, action: IAction) => {
             detectOctaves: action.octave ?? false,
         };
     }
-    default:
-      throw Error("Unknown action: " + action.type);
   }
 };

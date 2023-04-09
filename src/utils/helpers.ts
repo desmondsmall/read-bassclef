@@ -62,6 +62,7 @@ export const getRandomNotes = (n: number, options: IOptions): INote[] => {
     for (let i = 0; i < n; i++) {
         const randomInt = randomIntFromInterval(0, notePool.length - 1);
         randomNotes.push(notePool[randomInt]);
+        notePool.slice(1, randomInt);
     }
 
     return randomNotes;

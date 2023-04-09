@@ -15,6 +15,7 @@ function App() {
 	const [ options, dispatchOptions ] = useReducer(optionsReducer, initialOptions);
 	const [ modal, setModal ] = useState<EModal>(EModal.HIDDEN);
 	const [ count, setCount ] = useState<number>(0);
+	const [ error, setError ] = useState<boolean>(false);
 
 	useEffect(() => {
 		console.log(notePlaying);
@@ -26,7 +27,6 @@ function App() {
 		}
 	}, [ notePlaying ]);
 
-	useEffect(() => console.log(options), [ options ]);
 	const connectAudio = async () => {
 		try {
 			const microphone = await navigator.mediaDevices.getUserMedia({
@@ -34,15 +34,14 @@ function App() {
 					echoCancellation: false,
 					autoGainControl: false,
 					noiseSuppression: false,
-					latency: 0,
 				},
 				video: false,
 			});
 			setUserAudio(microphone);
 			start();
+			setError(false);
 		} catch(err) {
-			// handle error
-			console.log(err);
+			setError(true);
 		}
 	};
 
@@ -99,6 +98,16 @@ function App() {
 				<button onClick={ stop }>
 					Stop
 				</button>
+			}
+			{ error &&
+				<div className="error-message">
+					<p>
+						There was an error connecting your audio.<br/>
+						You might have to close and re-open your browser. <br/>
+						Make sure to hit accept!
+					</p>
+					<button onClick={ () => setError(false) }>x</button>
+				</div>
 			}
 			<Options
 				dispatchOptions={ dispatchOptions }

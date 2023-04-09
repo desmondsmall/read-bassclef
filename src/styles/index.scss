@@ -80,12 +80,12 @@ header {
 		background-color: $brand;
 		color: $white;
 		box-shadow: $shadow-sm;
-		transition-duration: 200ms;
+		transition-duration: 300ms;
 	}
 
 	.play:hover,
 	button.active:hover {
-		background-color: $black;
+		background-color: #444444;
 		color: $white;
 	}
 }
@@ -224,6 +224,29 @@ button.active {
 .hidden {
 	opacity: 0;
 	pointer-events: none;
+}
+
+.error-message {
+	display: flex;
+	margin-top: 2.5rem;
+	margin-left: 3.75rem;
+	padding: 0 10%;
+	gap: 1rem;
+	place-content: center;
+
+	p {
+		text-align: center;
+		font-weight: bold;
+		font-family: $font-mono;
+		color: rgb(177, 0, 0);
+	}
+
+	button {
+		display: flex;
+		align-items: center;
+		background-color: transparent;
+		border: none;
+	}
 }
 
 @media screen and (min-width: $screen-xs) {
