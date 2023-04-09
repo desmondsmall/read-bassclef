@@ -18,7 +18,6 @@ export const App: React.FC = () => {
 	const [ error, setError ] = useState<boolean>(false);
 	const [ count, setCount ] = useState<number>(0);
 
-	// listen for correct notes
 	useEffect(() => {
 		if (notePlaying && notesToPlay) {
 			const noteToCheck = notesToPlay[count - 1];
