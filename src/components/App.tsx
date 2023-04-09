@@ -1,13 +1,12 @@
 import React, { useEffect, useReducer, useState } from "react";
+import { optionsReducer, initialOptions } from "../reducers/optionsReducer";
 import { getRandomNotes, notesAreEqual } from "../utils/helpers";
 import { EModal, INote } from "../utils/types";
-import { optionsReducer, initialOptions } from "../reducers/options";
 import { MusicStaff } from "./MusicStaff";
 import { Analyser } from "./Analyser";
 import { Options } from "./Options";
-import { TiCog, TiInfoLarge } from "react-icons/ti";
 
-function App() {
+export const App: React.FC = () => {
 
 	const [ userAudio, setUserAudio ] = useState<MediaStream | null>(null);
 	const [ notePlaying, setNotePlaying ] = useState<INote | null>(null);
@@ -18,11 +17,10 @@ function App() {
 	const [ error, setError ] = useState<boolean>(false);
 
 	useEffect(() => {
-		console.log(notePlaying);
 		if (notePlaying && notesToPlay) {
 			const noteToCheck = notesToPlay[count - 1];
 			if (notesAreEqual(notePlaying, noteToCheck, options)) {
-				handleCorrectNote();
+				handleCount();
 			}
 		}
 	}, [ notePlaying ]);
@@ -57,7 +55,7 @@ function App() {
 		setCount(0);
 	};
 
-	const handleCorrectNote = () => {
+	const handleCount = () => {
 		if (count + 1 <= 4) {
 			setCount(count => count + 1);
 		} else {
@@ -74,7 +72,6 @@ function App() {
 					setNotePlaying={ setNotePlaying }
 				/>
 			}
-
 			{ !userAudio &&
 				<header>
 					<h2>Learn to Read</h2>
@@ -95,7 +92,7 @@ function App() {
 					</button>
 				</div>
 			:
-				<button onClick={ stop }>
+				<button className="stop" onClick={ stop }>
 					Stop
 				</button>
 			}
@@ -115,12 +112,8 @@ function App() {
 				modal={ modal }
 				setModal={ setModal }
 			/>
-			<div className="link-group">
-				<TiInfoLarge className="icon" onClick={ () => setModal(EModal.INFO) }/>
-				<TiCog className="icon" onClick={ () => setModal(EModal.OPTIONS) }/>
-			</div>
 		</main>
 	);
-}
+};
 
 export default App;

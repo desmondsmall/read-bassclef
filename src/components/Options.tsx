@@ -1,6 +1,6 @@
 import React from "react";
 import { EShowLabels, IOptions, EAccidentals, Action, EModal, } from "./../utils/types";
-import { TiTimes } from "react-icons/ti";
+import { TiCog, TiInfoLarge, TiTimes } from "react-icons/ti";
 
 interface Props {
     modal: EModal;
@@ -105,5 +105,10 @@ export const Options: React.FC<Props> = (props) => {
 		);
 	}
 
-	return null;
+	return (
+		<div className="link-group">
+			<TiInfoLarge className="icon" onClick={ () => setModal(EModal.INFO) }/>
+			<TiCog className="icon" onClick={ () => setModal(EModal.OPTIONS) }/>
+		</div>
+	);
 };

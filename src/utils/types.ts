@@ -11,9 +11,9 @@ export interface IOptions {
 }
 
 export enum EModal {
-     OPTIONS = "options",
-     INFO = "info",
-     HIDDEN = "",
+     OPTIONS,
+     INFO,
+     HIDDEN,
 }
 
 export type Action =
