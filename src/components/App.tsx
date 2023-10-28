@@ -67,7 +67,7 @@ export const App: React.FC = () => {
 					notePlaying={ notePlaying }
 					setNotePlaying={ setNotePlaying }
 				/>
-				:
+            :
 				<header>
 					<h2>Learn to Read</h2>
 					<h1>Bass Clef</h1>
@@ -81,10 +81,10 @@ export const App: React.FC = () => {
 			/>
 			{!userAudio ?
 				<div className="intro">
-					<p className="description">Plug your bass into an audio interace or put your mic or phone next to your amp and crank it!</p>
+					<p className="description">Plug your bass into an audio interface or put a mic/phone next to your amp and start playing!</p>
 					<button onClick={ async () => connectAudio() } className="play">Play</button>
 				</div>
-				:
+            :
 				<button className="play" onClick={ stop }>
 					Stop
 				</button>
