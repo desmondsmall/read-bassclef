@@ -150,7 +150,7 @@ export const flats: INote[] = [
     {
         note: "B♭",
         octave: 2,
-        notation: "_A,",
+        notation: "_B,",
     },
     {
         note: "G♭",
