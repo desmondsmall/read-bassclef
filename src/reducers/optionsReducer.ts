@@ -4,6 +4,7 @@ export const initialOptions: IOptions = {
   accidentals: [ EAccidentals.NATURALS ],
   showLabels: EShowLabels.WHENCORRECT,
   detectOctaves: false,
+  extendedRanges: [],
 };
 
 export const optionsReducer = (state: IOptions, action: Action) => {
@@ -27,6 +28,15 @@ export const optionsReducer = (state: IOptions, action: Action) => {
         return {
             ...state,
             detectOctaves: action.octave ?? false,
+        };
+    }
+    case "toggleExtendedRange": {
+      const extendedRanges = [ ...state.extendedRanges ];
+      const index = extendedRanges.findIndex(extendedRange => extendedRange === action.extendedRange);
+      index != -1 ? extendedRanges.splice(index, 1) : extendedRanges.push(action.extendedRange);
+        return {
+            ...state,
+            extendedRanges: extendedRanges,
         };
     }
   }
