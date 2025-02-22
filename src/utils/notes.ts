@@ -184,6 +184,114 @@ export const flats: INote[] = [
     },
 ];
 
+export const naturalsExtendedLow: INote[] = [
+    {
+        note: "B",
+        octave: 0,
+        notation: "B,,,",
+    },
+    {
+        note: "C",
+        octave: 1,
+        notation: "C,,",
+    },
+    {
+        note: "D",
+        octave: 1,
+        notation: "D,,",
+    }
+];
+
+export const sharpsExtendedLow: INote[] = [
+    {
+        note: "C♯",
+        octave: 1,
+        notation: "^C,,",
+    },
+    {
+        note: "D♯",
+        octave: 1,
+        notation: "^D,,",
+    }
+];
+
+export const flatsExtendedLow: INote[] = [
+    {
+        note: "D♭",
+        octave: 1,
+        notation: "_D,,",
+    },
+    {
+        note: "E♭",
+        octave: 1,
+        notation: "_E,,",
+    }
+];
+
+export const naturalsExtendedHigh: INote[] = [
+    {
+        note: "C",
+        octave: 4,
+        notation: "C'",
+    },
+    {
+        note: "F",
+        octave: 3,
+        notation: "F",
+    },
+    {
+        note: "G",
+        octave: 3,
+        notation: "G",
+    },
+    {
+        note: "A",
+        octave: 3,
+        notation: "A",
+    },
+    {
+        note: "B",
+        octave: 3,
+        notation: "B",
+    }
+];
+
+export const sharpsExtendedHigh: INote[] = [
+    {
+        note: "F♯",
+        octave: 3,
+        notation: "^F",
+    },
+    {
+        note: "G♯",
+        octave: 3,
+        notation: "^G",
+    },
+    {
+        note: "A♯",
+        octave: 3,
+        notation: "^A",
+    }
+];
+
+export const flatsExtendedHigh: INote[] = [
+    {
+        note: "G♭",
+        octave: 3,
+        notation: "_G",
+    },
+    {
+        note: "A♭",
+        octave: 3,
+        notation: "_A",
+    },
+    {
+        note: "B♭",
+        octave: 3,
+        notation: "_B",
+    }
+];
+
 export const rest: INote = {
     note: "rest",
     octave: 0,

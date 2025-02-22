@@ -1,5 +1,5 @@
 import React from "react";
-import { EShowLabels, IOptions, EAccidentals, Action, EModal, } from "./../utils/types";
+import { EShowLabels, IOptions, EAccidentals, EExtendedRange, Action, EModal, } from "./../utils/types";
 import { TiTimes } from "react-icons/ti";
 
 interface Props {
@@ -100,6 +100,28 @@ export const Options: React.FC<Props> = (props) => {
 							</button>
 						</div>
 					</div>
+					
+					<div className="option">
+						<div className="label">
+							<h2>Extended Range</h2>
+							<p>Include extra notes available on five- and six-string basses.</p>
+						</div>
+						<div className="button-group">
+							<button
+								className={ `${options.extendedRanges.includes(EExtendedRange.LOWB) ? `active` : ``}` }
+								onClick={ () => dispatchOptions({ type: "toggleExtendedRange", extendedRange: EExtendedRange.LOWB }) }
+							>
+								Low B String
+							</button>
+							<button
+								className={ `${options.extendedRanges.includes(EExtendedRange.HIGHC) ? `active` : ``}` }
+								onClick={ () => dispatchOptions({ type: "toggleExtendedRange", extendedRange: EExtendedRange.HIGHC }) }
+							>
+								High C String
+							</button>
+						</div>
+					</div>
+
 				</div>
 			</section>
 		);
