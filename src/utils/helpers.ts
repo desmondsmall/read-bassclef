@@ -99,3 +99,67 @@ export const notesAreEqual = (notePlaying: INote, noteToCheck: INote, options: I
         return equalNote;
     }
 };
+
+const keys: Record<string, string[]> = {
+    "C major": ["C", "D", "E", "F", "G", "A", "B"],
+    "G major": ["G", "A", "B", "C", "D", "E", "F♯"],
+    "D major": ["D", "E", "F♯", "G", "A", "B", "C♯"],
+    "A major": ["A", "B", "C♯", "D", "E", "F♯", "G♯"],
+    "E major": ["E", "F♯", "G♯", "A", "B", "C♯", "D♯"],
+    "B major": ["B", "C♯", "D♯", "E", "F♯", "G♯", "A♯"],
+    "F♯ major": ["F♯", "G♯", "A♯", "B", "C♯", "D♯", "E♯"],
+    "C♯ major": ["C♯", "D♯", "E♯", "F♯", "G♯", "A♯", "B♯"],
+    "F major": ["F", "G", "A", "B♭", "C", "D", "E"],
+    "B♭ major": ["B♭", "C", "D", "E♭", "F", "G", "A"],
+    "E♭ major": ["E♭", "F", "G", "A♭", "B♭", "C", "D"],
+    "A♭ major": ["A♭", "B♭", "C", "D♭", "E♭", "F", "G"],
+    "D♭ major": ["D♭", "E♭", "F", "G♭", "A♭", "B♭", "C"],
+    "G♭ major": ["G♭", "A♭", "B♭", "C♭", "D♭", "E♭", "F"],
+    "C♭ major": ["C♭", "D♭", "E♭", "F♭", "G♭", "A♭", "B♭"],
+    "A minor": ["A", "B", "C", "D", "E", "F", "G"],
+    "E minor": ["E", "F♯", "G", "A", "B", "C", "D"],
+    "B minor": ["B", "C♯", "D", "E", "F♯", "G", "A"],
+    "F♯ minor": ["F♯", "G♯", "A", "B", "C♯", "D", "E"],
+    "C♯ minor": ["C♯", "D♯", "E", "F♯", "G♯", "A", "B"],
+    "G♯ minor": ["G♯", "A♯", "B", "C♯", "D♯", "E", "F♯"],
+    "D♯ minor": ["D♯", "E♯", "F♯", "G♯", "A♯", "B", "C♯"],
+    "A♯ minor": ["A♯", "B♯", "C♯", "D♯", "E♯", "F♯", "G♯"],
+    "D minor": ["D", "E", "F", "G", "A", "B♭", "C"],
+    "G minor": ["G", "A", "B♭", "C", "D", "E♭", "F"],
+    "C minor": ["C", "D", "E♭", "F", "G", "A♭", "B♭"],
+    "F minor": ["F", "G", "A♭", "B♭", "C", "D♭", "E♭"],
+    "B♭ minor": ["B♭", "C", "D♭", "E♭", "F", "G♭", "A♭"],
+    "E♭ minor": ["E♭", "F", "G♭", "A♭", "B♭", "C♭", "D♭"],
+    "A♭ minor": ["A♭", "B♭", "C♭", "D♭", "E♭", "F♭", "G♭"],
+};
+
+const validNotes = new Set<string>([
+    "C", "D", "E", "F", "G", "A", "B",
+    "C♯", "D♯", "E♯", "F♯", "G♯", "A♯", "B♯",
+    "C♭", "D♭", "E♭", "F♭", "G♭", "A♭", "B♭"
+]);
+
+export const isInKey = (note: string, key: string): boolean => {
+    if (!(key in keys)) throw new Error(`Invalid key: ${key}`);
+    if (!validNotes.has(note)) throw new Error(`Invalid note: ${note}`);
+    return keys[key].includes(note);
+};
+
+export const printableKeySignatures: Record<string, string> = {
+    "Random": "Random",
+    "C major / A minor (no sharps or flats)": "C major",
+    "G major / E minor (♯)": "G major",
+    "D major / B minor (♯♯)": "D major",
+    "A major / F♯ minor (♯♯♯)": "A major",
+    "E major / C♯ minor (♯♯♯♯)": "E major",
+    "B major / G♯ minor (♯♯♯♯♯)": "B major",
+    "F♯ major / D♯ minor (♯♯♯♯♯♯)": "F♯ major",
+    "C♯ major / A♯ minor (♯♯♯♯♯♯♯)": "C♯ major",
+    "F major / D minor (♭)": "F major",
+    "B♭ major / G minor (♭♭)": "B♭ major",
+    "E♭ major / C minor (♭♭♭)": "E♭ major",
+    "A♭ major / F minor (♭♭♭♭)": "A♭ major",
+    "D♭ major / B♭ minor (♭♭♭♭♭)": "D♭ major",
+    "G♭ major / E♭ minor (♭♭♭♭♭♭)": "G♭ major",
+    "C♭ major / A♭ minor (♭♭♭♭♭♭♭)": "C♭ major"
+};

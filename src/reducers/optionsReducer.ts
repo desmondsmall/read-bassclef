@@ -5,6 +5,7 @@ export const initialOptions: IOptions = {
   showLabels: EShowLabels.WHENCORRECT,
   detectOctaves: false,
   extendedRanges: [],
+  key: "C major",
 };
 
 export const optionsReducer = (state: IOptions, action: Action) => {
@@ -37,6 +38,13 @@ export const optionsReducer = (state: IOptions, action: Action) => {
         return {
             ...state,
             extendedRanges: extendedRanges,
+        };
+    }
+    case "changeKey": {
+      console.debug("Change key, " + action.key)
+        return {
+            ...state,
+            key: action.key,
         };
     }
   }

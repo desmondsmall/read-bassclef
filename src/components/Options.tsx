@@ -1,5 +1,6 @@
 import React from "react";
 import { EShowLabels, IOptions, EAccidentals, EExtendedRange, Action, EModal, } from "./../utils/types";
+import { printableKeySignatures } from "./../utils/helpers";
 import { TiTimes } from "react-icons/ti";
 
 interface Props {
@@ -77,6 +78,23 @@ export const Options: React.FC<Props> = (props) => {
 							>
 								Flats
 							</button>
+						</div>
+					</div>
+
+					<div className="option">
+						<div className="label">
+							<h2>Key signature</h2>
+							<p>Display clef in a specific key signature, or have a random key every bar.</p>
+						</div>
+						<div className="dropdown">
+							<select
+								value={options.key || "C major / A minor (no sharps or flats)"}
+								onChange={(e) => dispatchOptions({ type: "changeKey", key: e.target.value })}
+							>
+								{Object.entries(printableKeySignatures).map(([label, value]) => (
+									<option key={value} value={value} label={label}/>
+								))}
+							</select>
 						</div>
 					</div>
 

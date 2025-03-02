@@ -26,7 +26,7 @@ export const MusicStaff: React.FC<Props> = (props) => {
     const displayNotes = [ sharps[1], naturals[6], flats[2], naturals[6] ];
 
     useEffect(() => {
-        abcjs.renderAbc(div.current, bar + renderNotation(notesToPlay ?? displayNotes), {
+        abcjs.renderAbc(div.current, bar + renderNotation(notesToPlay ?? displayNotes, options.key), {
             add_classes: true,
             responsive: "resize",
             staffwidth: 200,
@@ -35,8 +35,8 @@ export const MusicStaff: React.FC<Props> = (props) => {
         if (el) el.style.color = "#141414";
     }, [ notesToPlay, count ]);
 
-    const renderNotation = (notes: INote[]) => {
-        let notation = "";
+    const renderNotation = (notes: INote[], key: string) => {
+        let notation = `K: ${key.replace("♯", "#").replace("♭", 'b')} \n`;
         notes?.forEach((note, index) => {
             if (index < count && userAudio ) {
                 switch (options.showLabels) {

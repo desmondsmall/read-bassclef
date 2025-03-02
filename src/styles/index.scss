@@ -241,6 +241,25 @@ button.active {
 	color: $white;
 }
 
+select {
+    font-family: $font-sans;
+	text-transform: uppercase;
+	font-weight: 600;
+    font-size: 1rem;
+    background-color: $white;
+    color: $black;
+    border: 2px solid $black;
+    padding: 0.4rem 1rem;
+    border-radius: 0.125rem;
+    cursor: pointer;
+    transition: background-color 300ms, color 300ms;
+
+    &:hover {
+        background-color: $brand;
+        color: $white;
+    }
+}
+
 .icon {
 	font-size: 2.75rem;
 	cursor: pointer;
