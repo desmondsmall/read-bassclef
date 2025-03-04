@@ -41,49 +41,53 @@ export const frequencyToNote = (freq: number | null): INote | null => {
     };
 };
 
+let previousNote: INote = naturals[0];
+
 export const getRandomNotes = (n: number, options: IOptions): INote[] => {
+    let timeoutLimit: number = 128;
     let notePool: INote[] = [];
     const randomNotes: INote[] = [];
 
-    options.accidentals?.forEach(accidental => {
-        switch (accidental) {
-            case EAccidentals.SHARPS:
-                notePool = notePool.concat(sharps);
-                options.extendedRanges.forEach(extendedRange => {
-                    notePool = notePool.concat(
-                        (extendedRange === EExtendedRange.LOWB) ? sharpsExtendedLow : sharpsExtendedHigh
-                    );
-                });
-                break;
+    notePool = notePool.concat(sharps);
+    notePool = notePool.concat(flats);
+    notePool = notePool.concat(naturals);
 
-            case EAccidentals.FLATS:
-                notePool = notePool.concat(flats);
-                options.extendedRanges.forEach(extendedRange => {
-                    notePool = notePool.concat(
-                        (extendedRange === EExtendedRange.LOWB) ? flatsExtendedLow : flatsExtendedHigh
-                    );
-                });
-                break;
-
-            case EAccidentals.NATURALS:
-                notePool = notePool.concat(naturals);
-                options.extendedRanges.forEach(extendedRange => {
-                    notePool = notePool.concat(
-                        (extendedRange === EExtendedRange.LOWB) ? naturalsExtendedLow : naturalsExtendedHigh
-                    );
-                });
-                break;
-        }
+    options.extendedRanges.forEach(extendedRange => {
+        notePool = notePool.concat((extendedRange === EExtendedRange.LOWB) ? sharpsExtendedLow : sharpsExtendedHigh);
+        notePool = notePool.concat((extendedRange === EExtendedRange.LOWB) ? flatsExtendedLow : flatsExtendedHigh);
+        notePool = notePool.concat((extendedRange === EExtendedRange.LOWB) ? naturalsExtendedLow : naturalsExtendedHigh);
     });
 
-    if (notePool?.length === 0) notePool = naturals;
+    if (notePool?.length == 0)
+        throw new Error('No notes to pick from!');
 
     while (randomNotes.length < n) {
         const randomInt = randomIntFromInterval(0, notePool.length - 1);
         const randomNote = notePool[randomInt];
-        if (!randomNotes.find(x => x.note === randomNote.note)) {
-            randomNotes.push(notePool[randomInt]);
+        const isDuplicateNote: boolean = options.detectOctaves ? (randomNote === previousNote) : (randomNote.note === previousNote.note);
+
+        if (isDuplicateNote)
+            continue;
+
+        for (let accidental of options.accidentals) {
+            if ((getAccidentalCharacterToRender(randomNote.note, options.key, randomNotes) == "" && accidental === EAccidentals.NONE)
+                || (getAccidentalCharacterToRender(randomNote.note, options.key, randomNotes) == "♯" && accidental === EAccidentals.SHARPS)
+                || (getAccidentalCharacterToRender(randomNote.note, options.key, randomNotes) == "♭" && accidental === EAccidentals.FLATS)
+                || (getAccidentalCharacterToRender(randomNote.note, options.key, randomNotes) == "♮" && accidental === EAccidentals.NATURALS)){
+                    randomNotes.push(randomNote);
+                    previousNote = randomNote;
+                    break;
+                }
         }
+
+        // FIXME: In some unfortunate combination of key signature, "Accidentals" settings and previous note,
+        // the next note might be impossible to generate. Come up with some time-out behaviour.
+        if (--timeoutLimit === 0)
+        {
+            console.debug("Could not generate enough notes");
+            break;
+        }
+
     }
 
     return randomNotes;
@@ -133,16 +137,61 @@ const keys: Record<string, string[]> = {
     "A♭ minor": ["A♭", "B♭", "C♭", "D♭", "E♭", "F♭", "G♭"],
 };
 
-const validNotes = new Set<string>([
-    "C", "D", "E", "F", "G", "A", "B",
-    "C♯", "D♯", "E♯", "F♯", "G♯", "A♯", "B♯",
-    "C♭", "D♭", "E♭", "F♭", "G♭", "A♭", "B♭"
-]);
+const removeAccidental = (note: string): string => {
+    return note.replace("♯", "").replace("♭", "").replace("♮", "");
+}
 
-export const isInKey = (note: string, key: string): boolean => {
-    if (!(key in keys)) throw new Error(`Invalid key: ${key}`);
-    if (!validNotes.has(note)) throw new Error(`Invalid note: ${note}`);
-    return keys[key].includes(note);
+const getNoteAccidental = (note: string): string => {
+    return note.slice(1);
+}
+
+const abcAccidentals: Record<string, string> ={
+    "": "",
+    "♯": "^",
+    "♭": "_",
+    "♮": "=",
+}
+
+export const applyAccidentalToAbcNotatedNote = (abcNotatedNote: string, printableAccidentalCharacter: string): string => {
+    const abcAccidentalCharacter = abcAccidentals[printableAccidentalCharacter];
+    return abcAccidentalCharacter + abcNotatedNote.replace("_", "").replace("^", "");
+};
+
+export const getAccidentalCharacterToRender = (note: string, key: string, previousNotes: INote[]): string => {
+    if (previousNotes?.length > 3)
+        throw new Error('Unexpected amount of notes in the bar: ' + previousNotes?.length);
+        //console.debug ('Unexpected amount of notes in the bar: ' + previousNotes?.length);
+
+    let accidentalState = "";
+
+    // The key will give us the initial state of accidental character
+    for (let noteInScale of keys[key]) {
+        if (removeAccidental (noteInScale) != removeAccidental(note))
+            continue;
+
+        accidentalState = getNoteAccidental(noteInScale);
+        break;
+    }
+
+    // Figure out the state of accidental for a given note by the end of previousNotes sequence
+    for (let previousNote of previousNotes)
+    {
+        if (removeAccidental (previousNote.note) != removeAccidental(note))
+            continue;
+
+        accidentalState = getNoteAccidental(previousNote.note);
+    }
+
+    // No accidental or accidental is already marked
+    if (accidentalState === getNoteAccidental(note))
+        return "";
+
+    // Current note is natural, but an accidental was previously applied
+    if (getNoteAccidental(note) === '')
+        return "♮";
+
+    // Note's accidental needs to be applied
+    return getNoteAccidental(note);
 };
 
 export const printableKeySignatures: Record<string, string> = {

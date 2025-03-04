@@ -55,6 +55,7 @@ export const App: React.FC = () => {
 	};
 
 	const reset = () => {
+		// TODO: Implement handling a random key option
 		setCount(1);
 		setNotesToPlay(getRandomNotes(4, options));
 	};

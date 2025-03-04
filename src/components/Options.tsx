@@ -61,22 +61,28 @@ export const Options: React.FC<Props> = (props) => {
 						</div>
 						<div className="button-group">
 							<button
-								className={ `${options.accidentals.includes(EAccidentals.NATURALS) ? `active` : ``}` }
-								onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.NATURALS }) }
+								className={ `${options.accidentals.includes(EAccidentals.NONE) ? `active` : ``}` }
+								onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.NONE }) }
 							>
-								Naturals
+								♪
 							</button>
 							<button
 								className={ `${options.accidentals.includes(EAccidentals.SHARPS) ? `active` : ``}` }
 								onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.SHARPS }) }
 							>
-								Sharps
+								♪♯
 							</button>
 							<button
 								className={ `${options.accidentals.includes(EAccidentals.FLATS) ? `active` : ``}` }
 								onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.FLATS }) }
 							>
-								Flats
+								♪♭
+							</button>
+							<button
+								className={ `${options.accidentals.includes(EAccidentals.NATURALS) ? `active` : ``}` }
+								onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.NATURALS }) }
+							>
+								♪♮
 							</button>
 						</div>
 					</div>

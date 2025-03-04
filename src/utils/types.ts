@@ -29,6 +29,7 @@ export enum EAccidentals {
      SHARPS = "Sharps",
      FLATS = "Flats",
      NATURALS = "Naturals",
+     NONE = "None",
 }
 
 export enum EShowLabels {
