@@ -41,6 +41,12 @@ export const frequencyToNote = (freq: number | null): INote | null => {
     };
 };
 
+const isDuplicateNote = (note1: INote, note2: INote, ignoreOctave: boolean): boolean => {
+    const unisonOrOctave: boolean = (note1.note === note2.note) || (note1.note === transpose(note2.note));
+    const sameOctave: boolean = (note1.octave === note2.octave);
+    return ignoreOctave ? unisonOrOctave : (unisonOrOctave && sameOctave);
+}
+
 let previousNote: INote = naturals[0];
 
 export const getRandomNotes = (n: number, options: IOptions): INote[] => {
@@ -64,9 +70,8 @@ export const getRandomNotes = (n: number, options: IOptions): INote[] => {
     while (randomNotes.length < n) {
         const randomInt = randomIntFromInterval(0, notePool.length - 1);
         const randomNote = notePool[randomInt];
-        const isDuplicateNote: boolean = options.detectOctaves ? (randomNote === previousNote) : (randomNote.note === previousNote.note);
 
-        if (isDuplicateNote)
+        if (isDuplicateNote (randomNote, previousNote, !options.detectOctaves))
             continue;
 
         for (let accidental of options.accidentals) {
@@ -87,7 +92,6 @@ export const getRandomNotes = (n: number, options: IOptions): INote[] => {
             console.debug("Could not generate enough notes");
             break;
         }
-
     }
 
     return randomNotes;
@@ -137,6 +141,11 @@ const keys: Record<string, string[]> = {
     "A♭ minor": ["A♭", "B♭", "C♭", "D♭", "E♭", "F♭", "G♭"],
 };
 
+export const getRandomKey = (): string => {
+    const keyNames = Object.keys(keys);
+    return keyNames[randomIntFromInterval(0, keyNames.length - 1)];
+};
+
 const removeAccidental = (note: string): string => {
     return note.replace("♯", "").replace("♭", "").replace("♮", "");
 }
@@ -160,7 +169,6 @@ export const applyAccidentalToAbcNotatedNote = (abcNotatedNote: string, printabl
 export const getAccidentalCharacterToRender = (note: string, key: string, previousNotes: INote[]): string => {
     if (previousNotes?.length > 3)
         throw new Error('Unexpected amount of notes in the bar: ' + previousNotes?.length);
-        //console.debug ('Unexpected amount of notes in the bar: ' + previousNotes?.length);
 
     let accidentalState = "";
 

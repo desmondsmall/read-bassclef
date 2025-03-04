@@ -41,7 +41,6 @@ export const optionsReducer = (state: IOptions, action: Action) => {
         };
     }
     case "changeKey": {
-      console.debug("Change key, " + action.key)
         return {
             ...state,
             key: action.key,
