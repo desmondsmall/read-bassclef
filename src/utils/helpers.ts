@@ -45,12 +45,12 @@ const isDuplicateNote = (note1: INote, note2: INote, ignoreOctave: boolean): boo
     const unisonOrOctave: boolean = (note1.note === note2.note) || (note1.note === transpose(note2.note));
     const sameOctave: boolean = (note1.octave === note2.octave);
     return ignoreOctave ? unisonOrOctave : (unisonOrOctave && sameOctave);
-}
+};
 
 let previousNote: INote = naturals[0];
 
 export const getRandomNotes = (n: number, options: IOptions): INote[] => {
-    let timeoutLimit: number = 128;
+    let timeoutLimit = 128;
     let notePool: INote[] = [];
     const randomNotes: INote[] = [];
 
@@ -74,7 +74,7 @@ export const getRandomNotes = (n: number, options: IOptions): INote[] => {
         if (isDuplicateNote (randomNote, previousNote, !options.detectOctaves))
             continue;
 
-        for (let accidental of options.accidentals) {
+        for (const accidental of options.accidentals) {
             if ((getAccidentalCharacterToRender(randomNote.note, options.key, randomNotes) == "" && accidental === EAccidentals.NONE)
                 || (getAccidentalCharacterToRender(randomNote.note, options.key, randomNotes) == "♯" && accidental === EAccidentals.SHARPS)
                 || (getAccidentalCharacterToRender(randomNote.note, options.key, randomNotes) == "♭" && accidental === EAccidentals.FLATS)
@@ -90,7 +90,7 @@ export const getRandomNotes = (n: number, options: IOptions): INote[] => {
         if (--timeoutLimit === 0)
         {
             console.debug("Could not generate enough notes");
-            break;
+            return [];
         }
     }
 
@@ -109,36 +109,36 @@ export const notesAreEqual = (notePlaying: INote, noteToCheck: INote, options: I
 };
 
 const keys: Record<string, string[]> = {
-    "C major": ["C", "D", "E", "F", "G", "A", "B"],
-    "G major": ["G", "A", "B", "C", "D", "E", "F♯"],
-    "D major": ["D", "E", "F♯", "G", "A", "B", "C♯"],
-    "A major": ["A", "B", "C♯", "D", "E", "F♯", "G♯"],
-    "E major": ["E", "F♯", "G♯", "A", "B", "C♯", "D♯"],
-    "B major": ["B", "C♯", "D♯", "E", "F♯", "G♯", "A♯"],
-    "F♯ major": ["F♯", "G♯", "A♯", "B", "C♯", "D♯", "E♯"],
-    "C♯ major": ["C♯", "D♯", "E♯", "F♯", "G♯", "A♯", "B♯"],
-    "F major": ["F", "G", "A", "B♭", "C", "D", "E"],
-    "B♭ major": ["B♭", "C", "D", "E♭", "F", "G", "A"],
-    "E♭ major": ["E♭", "F", "G", "A♭", "B♭", "C", "D"],
-    "A♭ major": ["A♭", "B♭", "C", "D♭", "E♭", "F", "G"],
-    "D♭ major": ["D♭", "E♭", "F", "G♭", "A♭", "B♭", "C"],
-    "G♭ major": ["G♭", "A♭", "B♭", "C♭", "D♭", "E♭", "F"],
-    "C♭ major": ["C♭", "D♭", "E♭", "F♭", "G♭", "A♭", "B♭"],
-    "A minor": ["A", "B", "C", "D", "E", "F", "G"],
-    "E minor": ["E", "F♯", "G", "A", "B", "C", "D"],
-    "B minor": ["B", "C♯", "D", "E", "F♯", "G", "A"],
-    "F♯ minor": ["F♯", "G♯", "A", "B", "C♯", "D", "E"],
-    "C♯ minor": ["C♯", "D♯", "E", "F♯", "G♯", "A", "B"],
-    "G♯ minor": ["G♯", "A♯", "B", "C♯", "D♯", "E", "F♯"],
-    "D♯ minor": ["D♯", "E♯", "F♯", "G♯", "A♯", "B", "C♯"],
-    "A♯ minor": ["A♯", "B♯", "C♯", "D♯", "E♯", "F♯", "G♯"],
-    "D minor": ["D", "E", "F", "G", "A", "B♭", "C"],
-    "G minor": ["G", "A", "B♭", "C", "D", "E♭", "F"],
-    "C minor": ["C", "D", "E♭", "F", "G", "A♭", "B♭"],
-    "F minor": ["F", "G", "A♭", "B♭", "C", "D♭", "E♭"],
-    "B♭ minor": ["B♭", "C", "D♭", "E♭", "F", "G♭", "A♭"],
-    "E♭ minor": ["E♭", "F", "G♭", "A♭", "B♭", "C♭", "D♭"],
-    "A♭ minor": ["A♭", "B♭", "C♭", "D♭", "E♭", "F♭", "G♭"],
+    "C major": [ "C", "D", "E", "F", "G", "A", "B" ],
+    "G major": [ "G", "A", "B", "C", "D", "E", "F♯" ],
+    "D major": [ "D", "E", "F♯", "G", "A", "B", "C♯" ],
+    "A major": [ "A", "B", "C♯", "D", "E", "F♯", "G♯" ],
+    "E major": [ "E", "F♯", "G♯", "A", "B", "C♯", "D♯" ],
+    "B major": [ "B", "C♯", "D♯", "E", "F♯", "G♯", "A♯" ],
+    "F♯ major": [ "F♯", "G♯", "A♯", "B", "C♯", "D♯", "E♯" ],
+    "C♯ major": [ "C♯", "D♯", "E♯", "F♯", "G♯", "A♯", "B♯" ],
+    "F major": [ "F", "G", "A", "B♭", "C", "D", "E" ],
+    "B♭ major": [ "B♭", "C", "D", "E♭", "F", "G", "A" ],
+    "E♭ major": [ "E♭", "F", "G", "A♭", "B♭", "C", "D" ],
+    "A♭ major": [ "A♭", "B♭", "C", "D♭", "E♭", "F", "G" ],
+    "D♭ major": [ "D♭", "E♭", "F", "G♭", "A♭", "B♭", "C" ],
+    "G♭ major": [ "G♭", "A♭", "B♭", "C♭", "D♭", "E♭", "F" ],
+    "C♭ major": [ "C♭", "D♭", "E♭", "F♭", "G♭", "A♭", "B♭" ],
+    "A minor": [ "A", "B", "C", "D", "E", "F", "G" ],
+    "E minor": [ "E", "F♯", "G", "A", "B", "C", "D" ],
+    "B minor": [ "B", "C♯", "D", "E", "F♯", "G", "A" ],
+    "F♯ minor": [ "F♯", "G♯", "A", "B", "C♯", "D", "E" ],
+    "C♯ minor": [ "C♯", "D♯", "E", "F♯", "G♯", "A", "B" ],
+    "G♯ minor": [ "G♯", "A♯", "B", "C♯", "D♯", "E", "F♯" ],
+    "D♯ minor": [ "D♯", "E♯", "F♯", "G♯", "A♯", "B", "C♯" ],
+    "A♯ minor": [ "A♯", "B♯", "C♯", "D♯", "E♯", "F♯", "G♯" ],
+    "D minor": [ "D", "E", "F", "G", "A", "B♭", "C" ],
+    "G minor": [ "G", "A", "B♭", "C", "D", "E♭", "F" ],
+    "C minor": [ "C", "D", "E♭", "F", "G", "A♭", "B♭" ],
+    "F minor": [ "F", "G", "A♭", "B♭", "C", "D♭", "E♭" ],
+    "B♭ minor": [ "B♭", "C", "D♭", "E♭", "F", "G♭", "A♭" ],
+    "E♭ minor": [ "E♭", "F", "G♭", "A♭", "B♭", "C♭", "D♭" ],
+    "A♭ minor": [ "A♭", "B♭", "C♭", "D♭", "E♭", "F♭", "G♭" ],
 };
 
 export const getRandomKey = (): string => {
@@ -148,18 +148,18 @@ export const getRandomKey = (): string => {
 
 const removeAccidental = (note: string): string => {
     return note.replace("♯", "").replace("♭", "").replace("♮", "");
-}
+};
 
 const getNoteAccidental = (note: string): string => {
     return note.slice(1);
-}
+};
 
 const abcAccidentals: Record<string, string> ={
     "": "",
     "♯": "^",
     "♭": "_",
     "♮": "=",
-}
+};
 
 export const applyAccidentalToAbcNotatedNote = (abcNotatedNote: string, printableAccidentalCharacter: string): string => {
     const abcAccidentalCharacter = abcAccidentals[printableAccidentalCharacter];
@@ -173,7 +173,7 @@ export const getAccidentalCharacterToRender = (note: string, key: string, previo
     let accidentalState = "";
 
     // The key will give us the initial state of accidental character
-    for (let noteInScale of keys[key]) {
+    for (const noteInScale of keys[key]) {
         if (removeAccidental (noteInScale) != removeAccidental(note))
             continue;
 
@@ -182,7 +182,7 @@ export const getAccidentalCharacterToRender = (note: string, key: string, previo
     }
 
     // Figure out the state of accidental for a given note by the end of previousNotes sequence
-    for (let previousNote of previousNotes)
+    for (const previousNote of previousNotes)
     {
         if (removeAccidental (previousNote.note) != removeAccidental(note))
             continue;
@@ -203,7 +203,7 @@ export const getAccidentalCharacterToRender = (note: string, key: string, previo
 };
 
 export const printableKeySignatures: Record<string, string> = {
-    "Random": "Random",
+    //"Random": "Random",
     "C major / A minor (no sharps or flats)": "C major",
     "G major / E minor (♯)": "G major",
     "D major / B minor (♯♯)": "D major",

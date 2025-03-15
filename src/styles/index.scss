@@ -5,6 +5,7 @@ $brand: $black;
 $white: rgb(245 245 244);
 $blue: #9ba7c5;
 $darkBlue: #4d6dbd;
+$gray: #2e3132;
 $bg: radial-gradient(circle, rgb(255, 255, 255) 0%, rgb(224, 233, 255) 50%, rgb(255, 255, 255) 100%);
 
 $screen-xs: "475px";
@@ -93,6 +94,15 @@ header {
 	}
 }
 
+.key-indicator {
+	position: absolute;
+	inset: 1rem;
+	display: flex;
+	justify-content: center;
+	text-transform: capitalize;
+	top: 20%;
+}
+
 .play {
 	margin: 0 auto;
 	width: 125px;
@@ -111,6 +121,13 @@ button.active:hover {
 	color: $white;
 }
 
+.skip {
+	position: fixed;
+	left: 1rem;
+	bottom: 1rem;
+	font-size: 0.75rem;
+}
+
 .music-staff-container {
 	width: 100%;
 	max-width: 600px;
@@ -127,6 +144,15 @@ button.active:hover {
 			position: relative;
 			left: -2rem;
 		}
+	}
+
+	h2 {
+		text-align: center;
+		text-transform: capitalize;
+		color: $black;
+		bottom: 0;
+		left: 0;
+		right: 0;
 	}
 }
 
@@ -159,10 +185,16 @@ button.active:hover {
 	display: flex;
 	flex-direction: column;
 	place-content: center;
+	max-width: 100%;
+	justify-content: center;
+	align-items: center;
 
 	&--wrapper {
-		max-width: 600px;
-		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		max-width: 100%;
+		position: relative;
+		top: 0;
 	}
 
 	.header {
@@ -205,6 +237,10 @@ button.active:hover {
 		gap: 0.5rem;
 		font-size: 14px;
 		font-size: 0.75rem;
+	}
+
+	.button-group.accidentals button {
+		font-size: 1.15rem;
 	}
 }
 
@@ -285,7 +321,7 @@ select {
 	margin-left: 3.75rem;
 	padding: 0 10%;
 	gap: 1rem;
-	place-content: center;
+	align-items: center;
 
 	p {
 		text-align: center;
@@ -313,13 +349,6 @@ select {
 	header h1 {
 		font-size: 2.75rem;
 	}
-
-	.options {
-		&--wrapper {
-			margin: 0 auto;
-			width: 90%;
-		}
-	}
 }
 
 @media screen and (min-width: $screen-sm) {
@@ -342,11 +371,6 @@ select {
 	}
 
 	.modal {
-		&--wrapper {
-			margin: 0 auto;
-			width: 75%;
-		}
-
 		p {
 			font-size: 1.15rem;
 		}
@@ -412,11 +436,6 @@ select {
 	}
 
 	.modal {
-		&--wrapper {
-			margin: 0 auto;
-			width: 50%;
-		}
-
 		.header {
 			svg {
 				font-size: 3.5rem;

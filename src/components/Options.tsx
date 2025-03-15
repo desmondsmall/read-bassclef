@@ -59,7 +59,7 @@ export const Options: React.FC<Props> = (props) => {
 							<h2>Accidentals</h2>
 							<p>Add any combination of naturals, flats or sharps.</p>
 						</div>
-						<div className="button-group">
+						<div className="button-group accidentals">
 							<button
 								className={ `${options.accidentals.includes(EAccidentals.NONE) ? `active` : ``}` }
 								onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.NONE }) }
@@ -94,11 +94,11 @@ export const Options: React.FC<Props> = (props) => {
 						</div>
 						<div className="dropdown">
 							<select
-								value={options.key || "C major / A minor (no sharps or flats)"}
-								onChange={(e) => dispatchOptions({ type: "changeKey", key: e.target.value })}
+								value={ options.key || "C major / A minor (no sharps or flats)" }
+								onChange={ (e) => dispatchOptions({ type: "changeKey", key: e.target.value }) }
 							>
-								{Object.entries(printableKeySignatures).map(([label, value]) => (
-									<option key={value} value={value} label={label}/>
+								{Object.entries(printableKeySignatures).map(([ label, value ]) => (
+									<option key={ value } value={ value } label={ label }/>
 								))}
 							</select>
 						</div>
@@ -124,7 +124,7 @@ export const Options: React.FC<Props> = (props) => {
 							</button>
 						</div>
 					</div>
-					
+
 					<div className="option">
 						<div className="label">
 							<h2>Extended Range</h2>

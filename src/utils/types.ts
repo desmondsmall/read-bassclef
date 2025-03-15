@@ -12,6 +12,10 @@ export interface IOptions {
     key: string;
 }
 
+export interface IError {
+     message: string;
+}
+
 export enum EModal {
      OPTIONS,
      INFO,

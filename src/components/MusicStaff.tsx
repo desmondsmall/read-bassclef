@@ -38,7 +38,7 @@ export const MusicStaff: React.FC<Props> = (props) => {
 
     const renderNotation = (notes: INote[], key: string) => {
         let notation = `K: ${key.replace("♯", "#").replace("♭", 'b')} \n`;
-        let previousNotes: INote[] = [];
+        const previousNotes: INote[] = [];
         notes?.forEach((note, index) => {
             const printableAccidentalCharacter = getAccidentalCharacterToRender(note.note, options.key, previousNotes);
             const noteAbcNotationToRender = applyAccidentalToAbcNotatedNote(note.notation, printableAccidentalCharacter);
@@ -67,6 +67,7 @@ export const MusicStaff: React.FC<Props> = (props) => {
 
     return (
         <div className="music-staff-container">
+            <h2>{options.key}</h2>
             <div className="music-staff" ref={ div } />
         </div>
     );
