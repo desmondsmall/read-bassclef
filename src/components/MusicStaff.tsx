@@ -67,7 +67,6 @@ export const MusicStaff: React.FC<Props> = (props) => {
 
     return (
         <div className="music-staff-container">
-            <h2>{options.key}</h2>
             <div className="music-staff" ref={ div } />
         </div>
     );
