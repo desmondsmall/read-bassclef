@@ -168,8 +168,8 @@ button.active:hover {
 	.header {
 		position: sticky;
 		top: 0;
-		z-index: 1;
-		background: $bg;
+		z-index: 20;
+		background-color: rgb(224, 233, 255);;
 		display: flex;
 		align-items: center;
 		margin-bottom: 1.5rem;
