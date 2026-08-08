@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { rest, naturals, sharps, flats } from "../utils/notes";
 import { EShowLabels, INote, IOptions } from "./../utils/types";
+import { applyAccidentalToAbcNotatedNote, getAccidentalCharacterToRender } from "./../utils/helpers";
 import abcjs from "abcjs";
 
 interface Props {
@@ -26,7 +27,7 @@ export const MusicStaff: React.FC<Props> = (props) => {
     const displayNotes = [ sharps[1], naturals[6], flats[2], naturals[6] ];
 
     useEffect(() => {
-        abcjs.renderAbc(div.current, bar + renderNotation(notesToPlay ?? displayNotes), {
+        abcjs.renderAbc(div.current, bar + renderNotation(notesToPlay ?? displayNotes, options.key), {
             add_classes: true,
             responsive: "resize",
             staffwidth: 200,
@@ -35,24 +36,29 @@ export const MusicStaff: React.FC<Props> = (props) => {
         if (el) el.style.color = "#141414";
     }, [ notesToPlay, count ]);
 
-    const renderNotation = (notes: INote[]) => {
-        let notation = "";
+    const renderNotation = (notes: INote[], key: string) => {
+        let notation = `K: ${key.replace("♯", "#").replace("♭", 'b')} \n`;
+        let previousNotes: INote[] = [];
         notes?.forEach((note, index) => {
+            const printableAccidentalCharacter = getAccidentalCharacterToRender(note.note, options.key, previousNotes);
+            const noteAbcNotationToRender = applyAccidentalToAbcNotatedNote(note.notation, printableAccidentalCharacter);
+            previousNotes.push(note);
+
             if (index < count && userAudio ) {
                 switch (options.showLabels) {
                     case EShowLabels.ALWAYS:
-                        notation += `\"_${ note.note }${ options.detectOctaves ? note.octave : "" }\"${ note.notation }`;
+                        notation += `\"_${ note.note }${ options.detectOctaves ? note.octave : "" }\"${ noteAbcNotationToRender }`;
                         break;
                     case EShowLabels.WHENCORRECT:
-                        notation += index + 1 != count ? `\"_${ note.note }${ options.detectOctaves ? note.octave : "" }\"${ note.notation }` : `\"_?\"${ note.notation }`;
+                        notation += index + 1 != count ? `\"_${ note.note }${ options.detectOctaves ? note.octave : "" }\"${ noteAbcNotationToRender }` : `\"_?\"${ noteAbcNotationToRender }`;
                         break;
                     case EShowLabels.NEVER:
-                        notation += note.notation;
+                        notation += noteAbcNotationToRender;
                 }
             } else if (userAudio) {
                 notation += rest.notation;
             } else {
-                notation += note.notation;
+                notation += noteAbcNotationToRender;
             }
         });
 

@@ -9,6 +9,7 @@ export interface IOptions {
     showLabels: EShowLabels;
     detectOctaves: boolean;
     extendedRanges: EExtendedRange[];
+    key: string;
 }
 
 export enum EModal {
@@ -22,11 +23,13 @@ export type Action =
      | { type: "showLabels", label: EShowLabels }
      | { type: "detectOctaves", octave: boolean }
      | { type: "toggleExtendedRange", extendedRange: EExtendedRange }
+     | { type: "changeKey", key: string }
 
 export enum EAccidentals {
      SHARPS = "Sharps",
      FLATS = "Flats",
      NATURALS = "Naturals",
+     NONE = "None",
 }
 
 export enum EShowLabels {

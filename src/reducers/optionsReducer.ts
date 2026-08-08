@@ -1,10 +1,11 @@
 import { EAccidentals, EShowLabels, IOptions, Action } from "../utils/types";
 
 export const initialOptions: IOptions = {
-  accidentals: [ EAccidentals.NATURALS ],
+  accidentals: [ EAccidentals.NONE ],
   showLabels: EShowLabels.WHENCORRECT,
   detectOctaves: false,
   extendedRanges: [],
+  key: "C major",
 };
 
 export const optionsReducer = (state: IOptions, action: Action) => {
@@ -37,6 +38,12 @@ export const optionsReducer = (state: IOptions, action: Action) => {
         return {
             ...state,
             extendedRanges: extendedRanges,
+        };
+    }
+    case "changeKey": {
+        return {
+            ...state,
+            key: action.key,
         };
     }
   }

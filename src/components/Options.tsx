@@ -1,5 +1,6 @@
 import React from "react";
 import { EShowLabels, IOptions, EAccidentals, EExtendedRange, Action, EModal, } from "./../utils/types";
+import { printableKeySignatures } from "./../utils/helpers";
 import { TiTimes } from "react-icons/ti";
 
 interface Props {
@@ -60,23 +61,46 @@ export const Options: React.FC<Props> = (props) => {
 						</div>
 						<div className="button-group">
 							<button
-								className={ `${options.accidentals.includes(EAccidentals.NATURALS) ? `active` : ``}` }
-								onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.NATURALS }) }
+								className={ `${options.accidentals.includes(EAccidentals.NONE) ? `active` : ``}` }
+								onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.NONE }) }
 							>
-								Naturals
+								♪
 							</button>
 							<button
 								className={ `${options.accidentals.includes(EAccidentals.SHARPS) ? `active` : ``}` }
 								onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.SHARPS }) }
 							>
-								Sharps
+								♪♯
 							</button>
 							<button
 								className={ `${options.accidentals.includes(EAccidentals.FLATS) ? `active` : ``}` }
 								onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.FLATS }) }
 							>
-								Flats
+								♪♭
 							</button>
+							<button
+								className={ `${options.accidentals.includes(EAccidentals.NATURALS) ? `active` : ``}` }
+								onClick={ () => dispatchOptions({ type: "toggleAccidental", accidental: EAccidentals.NATURALS }) }
+							>
+								♪♮
+							</button>
+						</div>
+					</div>
+
+					<div className="option">
+						<div className="label">
+							<h2>Key signature</h2>
+							<p>Display clef in a specific key signature, or have a random key every bar.</p>
+						</div>
+						<div className="dropdown">
+							<select
+								value={options.key || "C major / A minor (no sharps or flats)"}
+								onChange={(e) => dispatchOptions({ type: "changeKey", key: e.target.value })}
+							>
+								{Object.entries(printableKeySignatures).map(([label, value]) => (
+									<option key={value} value={value} label={label}/>
+								))}
+							</select>
 						</div>
 					</div>
 
